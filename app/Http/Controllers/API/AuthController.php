@@ -21,6 +21,7 @@ class AuthController extends Controller
         $profile = Profile::create([
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'company' => $request->company,
             'referral_code' => Str::random(8)
         ]);
 
@@ -59,7 +60,7 @@ class AuthController extends Controller
     // LOGOUT
     public function logout(Request $request)
     {
-        $request->user()->currentAccessToken()->delete;
+        $request->user()->tokens()->delete();
         return response()->json(['message' => 'Logout exitoso']);
     }
 }
